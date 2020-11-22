@@ -40,41 +40,53 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;  
 import javafx.stage.Stage;  
 import javafx.util.Duration;
+import java.io.FileInputStream; 
+import java.io.FileNotFoundException; 
+import javafx.application.Application; 
+import javafx.scene.Group; 
+import javafx.scene.Scene; 
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;  
+import javafx.stage.Stage;  
 
 
 //--module-path "D:\javafx\javafx-sdk-15.0.1\lib" --add-modules javafx.controls,javafx.fxml
 public class HomeScreen extends Application {
 	Scene s1;
     @Override
-    public void start( Stage stage) 
+    public void start( Stage stage) throws FileNotFoundException 
     {
     	stage.setTitle("creating canvas"); 
-    	  
-        // create a canvas 
         Canvas canvas = new Canvas(); 
         gameMode g=new gameMode();
-        // set height and width 
+       
         canvas.setHeight(800); 
         canvas.setWidth(800); 
   
         // graphics context 
-        GraphicsContext graphics_context =  
-            canvas.getGraphicsContext2D(); 
-        graphics_context.setFill(Color.PINK); 
-        graphics_context.fillRect(0, 0, 800, 800);
+        GraphicsContext graphics_context =  canvas.getGraphicsContext2D(); 
+
+        StackPane sp = new StackPane();
+        Image img = new Image("b8.jpg");
+        ImageView imgView = new ImageView(img);
+        imgView.setX(50); 
+        imgView.setY(25); 
+        
+        //setting the fit height and width of the image view 
+        imgView.setFitHeight(800); 
+        imgView.setFitWidth(800);
+        sp.getChildren().add(imgView);  
   
-        // set fill for rectangle 
+      //   set fill for rectangle 
         graphics_context.setFill(Color.YELLOW); 
         graphics_context.fillRect(30, 30, 70, 70); 
   
-        // set fill for rectangle 
+       
         graphics_context.setFill(Color.RED); 
         graphics_context.fillRect(20, 20, 70, 70);
         
-        
-  
-        // set fill for oval 
-        graphics_context.setFill(Color.BLUE); 
+   
+        graphics_context.setFill(Color.PINK); 
         graphics_context.fillRect(10, 10, 70,70); 
   
         
@@ -82,8 +94,8 @@ public class HomeScreen extends Application {
         GraphicsContext gc = canvas.getGraphicsContext2D();
         GraphicsContext gc1 = canvas.getGraphicsContext2D();
          
-        gc.setFill( Color.RED );
-        gc.setStroke( Color.BLACK );
+        gc.setFill( Color.YELLOW );
+        gc.setStroke( Color.YELLOW );
         gc.setLineWidth(2);
         Font theFont = Font.font( "Times New Roman", FontWeight.BOLD, 48 );
         gc.setFont( theFont );
@@ -91,75 +103,40 @@ public class HomeScreen extends Application {
         gc.strokeText( "WELCOME TO HOMESCREEN!", 60, 150 );
 
         
-        gc1.setFill( Color.BLUE );
-        gc1.setStroke( Color.BLACK );
+        gc1.setFill( Color.CYAN );
+        gc1.setStroke( Color.CYAN );
         gc1.setLineWidth(1.5);
         Font theFont1 = Font.font( "Times New Roman", FontWeight.BOLD, 65 );
         gc1.setFont( theFont1 );
         gc1.fillText( "COLOR SWITCH", 150, 250 );
         gc1.strokeText( "COLOR SWITCH", 150, 250 );
+        
         FillTransition fill = new FillTransition();  
-        Circle cir = new Circle(400,450,100);   
-        
-        
-        fill.setAutoReverse(true);  
-          
-         
-        fill.setCycleCount(50);  
-          
-       
+        Circle cir = new Circle(400,450,100);         
+        fill.setAutoReverse(true);          
+        fill.setCycleCount(50);     
         fill.setDuration(Duration.millis(2000));  
-          
-    
         fill.setFromValue(Color.RED);  
-         
-        fill.setToValue(Color.YELLOW); 
-//        fill.setFromValue(Color.YELLOW);
-//        fill.setToValue(Color.BLUE);
-//        
-//        fill.setFromValue(Color.BLUE);  
-//         
-//        fill.setToValue(Color.PURPLE); 
+        fill.setToValue(Color.PURPLE); 
         fill.setShape(cir);
-          
-        
-          
-        //playing the fill transition   
         fill.play(); 
+        
+        
         cir.setStrokeWidth(10); 
-        StrokeTransition stroke = new StrokeTransition();  
-        
-        //The transition will set to be auto reserved by setting this to true  
-        stroke.setAutoReverse(true);  
-          
-        //setting cycle count for the Stroke transition   
-        stroke.setCycleCount(500);  
-          
-        //setting duration for the Stroke Transition   
-        stroke.setDuration(Duration.millis(2000));  
-          
-        //setting the Initial from value of the Stroke color  
-        stroke.setFromValue(Color.BLUE);  
-          
-        //setting the target value of the Stroke color   
-        stroke.setToValue(Color.PURPLE);  
-          
-        //setting polygon as the shape onto which the Stroke transition will be applied   
-        stroke.setShape(cir);  
-        
-          
-        //playing the Stroke transition   
+        StrokeTransition stroke = new StrokeTransition(); 
+        stroke.setAutoReverse(true);
+        stroke.setCycleCount(500);
+        stroke.setDuration(Duration.millis(2000));
+        stroke.setFromValue(Color.BLUE);
+        stroke.setToValue(Color.YELLOW);
+        stroke.setShape(cir);
         stroke.play();
-        
-        
+    
         Button b = new Button("START GAME"); 
         Button bt = new Button("     EXIT     "); 
-        
-        // create a stack pane 
+      
         Pane r = new Pane(); 
   
-        // create a label 
-        Label l = new Label("");
         b.setScaleY(3);
         b.setScaleX(4);
         b.setLayoutX(200);  //this is how you change locations
@@ -170,28 +147,12 @@ public class HomeScreen extends Application {
         bt.setLayoutX(570);  //this is how you change locations
         bt.setLayoutY(650);
   
-        // action event 
-//        EventHandler<ActionEvent> event = new EventHandler<ActionEvent>() { 
-//            public void handle(ActionEvent e) 
-//            { 
-//            	b.setOnAction(event->stage.setScene(s1));
-//                StackPane sp=new StackPane();
-//                s1=new Scene(sp,800,800);
-//                
-//            } 
-//        }; 
-//  
-        // when button is pressed 
-    //    b.setOnAction({e->{stage.setScene(s1)}); 
+   
         r.getChildren().add(b); 
-        // bt.setOnAction(event); 
-   	  
-         // add button 
-         r.getChildren().add(bt); 
-         //r.getChildren().add(l);
-         
-         Group group = new Group(canvas,r); 
-         group.getChildren().addAll(cir);
+        r.getChildren().add(bt); 
+             
+        Group group = new Group(sp,canvas,r); 
+        group.getChildren().addAll(cir);
         Scene scene = new Scene(group, 800, 800); 
         
         Group f=new Group();
@@ -199,12 +160,12 @@ public class HomeScreen extends Application {
         	stage.setScene(s1);
         	//g.doit(s1);
         	
-        	f.getChildren().add(g.doit(stage,scene));
+        	f.getChildren().add(g.doit(stage,scene,s1));
                  	
     		
         });
         //StackPane sp=new StackPane();
-        s1=new Scene(f,600,600);
+        s1=new Scene(f,800,800);
         
         bt.setOnAction(e -> {
         	stage.close();
@@ -214,13 +175,6 @@ public class HomeScreen extends Application {
         
         
   
-        // add button 
-      
-  
-        // create a scene 
-        
-  
-        // set the scene 
         stage.setScene(scene); 
   
         stage.show(); 
