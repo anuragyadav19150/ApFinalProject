@@ -21,8 +21,13 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import javafx.stage.Stage; 
-import java.net.*; 
+import javafx.stage.Stage;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.net.*;
+import java.util.ArrayList;
+
 import javafx.scene.layout.*; 
 import javafx.scene.image.*;
 import javafx.scene.input.KeyCode;
@@ -53,13 +58,16 @@ public class gameMode {
 	}
 	
 	
-	public static Group doit(Stage s,Scene s3,Scene s1) {
+	public static Group doit(Stage s,Scene s3,Scene s1,ArrayList<Scene> savedlist) {
 	
 		 Canvas canvas = new Canvas();
 		 canvas.setHeight(800); 
 	     canvas.setWidth(800); 
+	     PrevSaved pp=new PrevSaved();
+	     leaderBoard lb=new leaderBoard();
 	        
 	     classic c=new classic();
+	     Flappyball fb=new Flappyball();
 	  
 	       
 	     GraphicsContext graphics_context =  canvas.getGraphicsContext2D(); 
@@ -107,8 +115,9 @@ public class gameMode {
 	      
 	        
 	        Button b = new Button("CLASSIC MODE START"); 
-	        Button bt = new Button("PREVIOUS GAMES"); 
+	        Button bt = new Button("PREVIOUS MATCH SCORE"); 
 	        Button btt = new Button(".     EXIT     ."); 
+	        Button btt1 = new Button("FLAPPY BALL"); 
 	        
 	       
 	        Pane r = new Pane(); 
@@ -128,12 +137,18 @@ public class gameMode {
 	        
 	        btt.setScaleY(2);
 	        btt.setScaleX(2);
-	        btt.setLayoutX(375);  
+	        btt.setLayoutX(500);  
 	        btt.setLayoutY(550);
 	        
+	        
+	        btt1.setScaleY(2);
+	        btt1.setScaleX(2);
+	        btt1.setLayoutX(200);  
+	        btt1.setLayoutY(550);
 	   	  
 	        
 	         r.getChildren().add(bt);
+	         r.getChildren().add(btt1);
 	         r.getChildren().add(btt);
 	         
 	         
@@ -144,7 +159,7 @@ public class gameMode {
 	         	s.setScene(s2);
 	         	//g.doit(s1);
 	         	
-	         	f1.getChildren().add(c.doit(s,s1));
+	         	f1.getChildren().add(c.doit(s,s1,s2,s3,savedlist));
 	                  	
 	     		
 	         });
@@ -158,6 +173,27 @@ public class gameMode {
 	                  	
 	     		
 	         });
+	         
+	         bt.setOnAction(e -> {
+	        	 try {
+					lb.start11(s, s1);
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+	 			
+
+	 		});
+	         
+	         btt1.setOnAction(e -> {
+		 			try {
+						fb.start11(s, s1);
+					} catch (FileNotFoundException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+
+		 		});
 	         
 	         
 	         

@@ -17,7 +17,11 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
+
+import java.io.FileNotFoundException;
 import java.net.*;
+import java.util.ArrayList;
+
 import javafx.scene.layout.*;
 import javafx.scene.image.*;
 import javafx.scene.input.KeyCode;
@@ -43,17 +47,22 @@ public class classic {
 	classic() {
 
 	}
-
+	static ArrayList<SavedGame> sv=new ArrayList<>();
 	static Scene s3;
 
-	public static Group doit(Stage s, Scene s1) {
+	public static Group doit(Stage s, Scene s1,Scene s4,Scene s3,ArrayList<Scene> savedlist) {
 
 		Canvas canvas = new Canvas();
 		canvas.setHeight(800);
 		canvas.setWidth(800);
 		gameplay m1 = new gameplay();
+		 PrevSaved pp=new PrevSaved();
 
-		GraphicsContext graphics_context = canvas.getGraphicsContext2D();
+	 
+		
+		 Saver_Loader sl=new Saver_Loader();
+		
+		 GraphicsContext graphics_context = canvas.getGraphicsContext2D();
 
 		StackPane sp = new StackPane();
 		Image img = new Image("B11.jpg");
@@ -92,7 +101,7 @@ public class classic {
 		gc1.strokeText("COLOR SWITCH", 200, 150);
 
 		Button b = new Button("START THE GAME");
-		Button bt = new Button("RESUME THE GAME");
+		Button bt = new Button("PREV SAVED GAME");
 		Button btt = new Button(".     EXIT     .");
 
 		// create a stack pane
@@ -122,7 +131,8 @@ public class classic {
 		Group f1 = new Group();
 		b.setOnAction(e -> {
 
-			m1.startu(s);
+			m1.startu(s,s4,s3,sv,sl,0,0,0);
+			//System.out.println(m1.g.Stars_collected);
 
 		});
 
@@ -130,6 +140,17 @@ public class classic {
 			s.setScene(s1);
 
 		});
+		
+		
+		 bt.setOnAction(e -> {
+	 			try {
+					pp.start11(s, s1,sv, m1,sl,s4,s3);
+				} catch (FileNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+
+	 		});
 
 		Rectangle rectangle = new Rectangle();
 		rectangle.setX(0);
