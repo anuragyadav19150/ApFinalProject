@@ -10,5 +10,5 @@ HOPE YOU LIKE IT!
 ![](apimages/5.png)
 ![](apimages/6.png)
 ![](apimages/9.png)
-![](apimages/8.png)
+![](apimages/8.jpg)
 ![](apimages/7.png)
